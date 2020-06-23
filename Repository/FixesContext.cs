@@ -16,7 +16,7 @@ namespace Repository
         {
             if (!optionsBuilder.IsConfigured)
             {
-                var s = ConfigurationManager.AppSettings["ConnectionString"];
+                var s = ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString;
                 optionsBuilder.UseSqlServer(s);
             }
         }
