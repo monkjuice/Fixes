@@ -45,11 +45,12 @@ namespace FixesAPI.Controllers
                     response.Message = new Dictionary<string, string>() { { "user", u.UserName } };
                     response.Error = false;
                 }
-                catch
+                catch(Exception e)
                 {
                     response.ResponseCode = (int)ResponseCode.ServerError;
                     response.Message = null;
                     response.Error = true;
+                    response.ErrorList = new Dictionary<string, string>() { { "msg", e.InnerException.ToString() } };
                 }
             }
             else

@@ -48,8 +48,7 @@ namespace FixesAPI.Controllers
 
                     response.ResponseCode = (int)ResponseCode.Ok;
 
-                    var msg = new Dictionary<string, string>();
-                    msg.Add("_token", tokenString);
+                    var msg = new Dictionary<string, string>(){ { "_token", tokenString } };
 
                     response.Message = msg;
 

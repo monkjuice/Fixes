@@ -17,7 +17,7 @@ namespace TestAPI
         {
             public string ResponseCode { get; set; }
             public Dictionary<string,string> Message { get; set; }
-            public string Error { get; set; }
+            public bool Error { get; set; }
             public Dictionary<string,string> ErrorList { get; set; }
         }
 
@@ -26,6 +26,9 @@ namespace TestAPI
             await CreateUser.Execute();
             await LoginUser.Execute();
             await HomeIndex.Execute();
+            await CreateFriendshipRequest.Execute();
+            await AcceptFriendshipRequest.Execute();
+            await FindUsers.Execute();
 
             Console.WriteLine("API Tests passed succesfully");
         }

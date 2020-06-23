@@ -4,35 +4,45 @@ using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Text;
 using System.Threading.Tasks;
+using static System.Diagnostics.Debug;
 
 namespace TestAPI
 {
-    class CreateUser
+    class FindUsers
     {
         private static readonly HttpClient client = new HttpClient();
 
         async static public Task Execute()
         {
-            try 
-            { 
+            try
+            {
                 client.DefaultRequestHeaders.Accept.Clear();
                 client.DefaultRequestHeaders.Accept.Add(
                     new MediaTypeWithQualityHeaderValue("application/json"));
                 client.DefaultRequestHeaders.Add("User-Agent", ".NET Foundation Repository Reporter");
 
+                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", Program.userToken);
+
                 var oBody = new
                 {
-                    Username = "Starlight",
-                    Password = "wipididu",
+                    SearchParam = "a",
                 };
 
                 string body = JsonConvert.SerializeObject(oBody, Formatting.Indented);
 
-                var stringTask = client.PostAsync(Program.baseURL + "/register", new StringContent(body, Encoding.UTF8, "application/json"));
+                var stringTask = client.PostAsync(Program.baseURL + "/api/user/findusers", new StringContent(body, Encoding.UTF8, "application/json"));
 
                 var msg = await stringTask;
 
-                Console.WriteLine(msg.Content.ReadAsStringAsync().Result);
+                Assert(msg.IsSuccessStatusCode, "HTTP Error code");
+
+                var jsonString = msg.Content.ReadAsStringAsync().Result.Replace("\\", "").Trim('"');
+
+                Console.WriteLine(jsonString);
+
+                var response = JsonConvert.DeserializeObject<Program.Response>(jsonString);
+
+                Assert(!response.Error, "Error searching users");
 
             }
             catch (Exception e)
@@ -40,6 +50,5 @@ namespace TestAPI
                 throw e;
             }
         }
-
     }
 }

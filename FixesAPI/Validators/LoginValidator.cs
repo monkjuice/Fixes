@@ -34,9 +34,6 @@ namespace FixesAPI.Validators
                 validator.ErrorList.Add("invalidLogin", "The username/password is invalid");
             }
 
-            // TODO: add max attempts code here.
-            validator.Error = false;
-
             return validator;
 
         }

@@ -19,7 +19,7 @@ namespace FixesAPI.Controllers
     {
         public enum ResponseCode
         {
-            Ok = 200,
+            Ok = 0,
             BadRequest = 400,
             ServerError = 500
         }
