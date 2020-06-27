@@ -48,16 +48,13 @@ namespace FixesAPI.Controllers
 
                     response.ResponseCode = (int)ResponseCode.Ok;
 
-                    var msg = new Dictionary<string, string>(){ { "_token", tokenString } };
-
-                    response.Message = msg;
+                    response.Message = new Dictionary<string, object>() { { "_token", tokenString } };
 
                     response.Error = false;
                 }
                 catch(Exception e)
                 {
                     response.ResponseCode = (int)ResponseCode.ServerError;
-                    response.Message = null;
                     response.Error = true;
                 }
             }

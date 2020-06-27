@@ -1,5 +1,4 @@
 ﻿using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
 using System;
 using System.Net.Http;
 using System.Net.Http.Headers;
@@ -8,11 +7,9 @@ using System.Threading.Tasks;
 
 namespace TestAPI
 {
-    class LoginUser
+    class UserProfile
     {
         private static readonly HttpClient client = new HttpClient();
-
-
 
         async static public Task Execute()
         {
@@ -23,25 +20,20 @@ namespace TestAPI
                     new MediaTypeWithQualityHeaderValue("application/json"));
                 client.DefaultRequestHeaders.Add("User-Agent", ".NET Foundation Repository Reporter");
 
-                var user = new
-                {
-                    Username = "Starlight",
-                    Password = "wipididu",
-                };
+                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", Program.userToken);
 
-                string body = JsonConvert.SerializeObject(user, Formatting.Indented);
-
-                var stringTask = client.PostAsync(Program.baseURL + "/login", new StringContent(body, Encoding.UTF8, "application/json"));
+                var stringTask = client.GetAsync(Program.baseURL + "/api/user/profile");
 
                 var msg = await stringTask;
 
                 var jsonString = msg.Content.ReadAsStringAsync().Result.Replace("\\", "").Trim('"');
 
-                Console.WriteLine(jsonString);
-
                 var response = JsonConvert.DeserializeObject<Program.Response>(jsonString);
 
-                Program.userToken = response.Message["_token"].ToString();
+                if(response.Error == false)
+                {
+                    var profile = JsonConvert.DeserializeObject<Models.UserProfile>(response.Message["Profile"].ToString());
+                }
 
             }
             catch (Exception e)

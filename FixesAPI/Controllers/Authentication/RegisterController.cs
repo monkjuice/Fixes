@@ -42,13 +42,12 @@ namespace FixesAPI.Controllers
                 {
                     var u = authService.Register(UserMapper.Map(user));
                     response.ResponseCode = (int)ResponseCode.Ok;
-                    response.Message = new Dictionary<string, string>() { { "user", u.UserName } };
+                    response.Message = new Dictionary<string, object>() { { "user", u.UserName } };
                     response.Error = false;
                 }
                 catch(Exception e)
                 {
                     response.ResponseCode = (int)ResponseCode.ServerError;
-                    response.Message = null;
                     response.Error = true;
                     response.ErrorList = new Dictionary<string, string>() { { "msg", e.InnerException.ToString() } };
                 }

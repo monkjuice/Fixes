@@ -11,6 +11,8 @@ namespace Model
 
         public string Password { get; set; }
 
+        public string ProfilePicturePath { get; set; }
+
         public string Salt { get; set; }
 
         public DateTime CreatedAt { get; set; }

@@ -11,5 +11,7 @@ namespace Repository.ViewModels
 
         public string UserName { get; set; }
 
+        public string ProfilePicturePath { get; set; }
+
     }
 }

@@ -64,6 +64,44 @@ namespace Repository.Repositories
                 return null;
             }
         }
+
+        async public Task<UserViewModel> GetUserProfile(int userId)
+        {
+            try
+            {
+                var user = await Context.User.Where(x => x.Id == userId).FirstOrDefaultAsync();
+
+                if(user != null)
+                {
+                    UserViewModel uvm = new UserViewModel();
+                    uvm.UserName = user.UserName;
+                    uvm.ProfilePicturePath = user.ProfilePicturePath;
+                    return uvm;
+                }
+
+                return null;
+            }
+            catch (Exception e)
+            {
+                // dev logger
+                return null;
+            }
+        }
+
+        async public Task<bool> StoreProfilePicturePath(string path, User user)
+        {
+            try
+            { 
+                user.ProfilePicturePath = path;
+                await Context.SaveChangesAsync();
+                return true;
+            }
+            catch(Exception e)
+            {
+                //dev logger
+                return false;
+            }
+        }
     }
 
 

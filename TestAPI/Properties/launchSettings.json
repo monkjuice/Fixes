@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "TestAPI": {
+      "commandName": "Project",
+      "commandLineArgs": "local"
+    }
+  }
+}

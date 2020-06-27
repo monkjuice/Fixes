@@ -1,8 +1,11 @@
-﻿using Model;
+﻿using FixesBusiness.Utils;
+using Model;
 using Repository.Interfaces;
 using Repository.Repositories;
 using Repository.ViewModels;
+using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
@@ -27,6 +30,42 @@ namespace FixesBusiness
             return null;
         }
 
+        async public Task<UserViewModel> GetUserProfile(int userId)
+        {
+            return await userRepository.GetUserProfile(userId);
+        }
+
+        async public Task<bool> UploadProfilePicture(Stream file, int userId)
+        {
+            try
+            {
+                var user = await userRepository.GetUser(userId);
+
+                if(user != null)
+                {
+                    string fileName = Guid.NewGuid().ToString() + ".jpg";
+
+                    string path = "https://fixesblob.blob.core.windows.net/profilepictures/" + fileName;
+
+                    var storedFile = await FileStorage.UploadBlob(file, "profilepictures", fileName);
+
+                    if (!storedFile)
+                        return false;
+
+                    var storedReference = await userRepository.StoreProfilePicturePath(path, user);
+
+                    if (storedReference)
+                        return true;
+                }
+
+                return false;
+
+            }
+            catch(Exception e)
+            {
+                return false;
+            }
+        }
     }
 }
 

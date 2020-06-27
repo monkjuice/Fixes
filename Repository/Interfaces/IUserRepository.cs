@@ -15,6 +15,10 @@ namespace Repository.Interfaces
 
         public Task<User> GetUser(int userId);
 
+        public Task<UserViewModel> GetUserProfile(int userId);
+
         public User GetUserByUserName(string username);
+
+        public Task<bool> StoreProfilePicturePath(string path, User user);
     }
 }

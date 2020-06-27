@@ -16,19 +16,25 @@ namespace TestAPI
         public class Response
         {
             public string ResponseCode { get; set; }
-            public Dictionary<string,string> Message { get; set; }
+            public IDictionary<string, object> Message { get; set; }
             public bool Error { get; set; }
             public Dictionary<string,string> ErrorList { get; set; }
         }
 
         static async Task Main(string[] args)
         {
+            if (args.Length > 1)
+                baseURL = "https://fixesapi-dev.azurewebsites.net/"; 
+
             await CreateUser.Execute();
             await LoginUser.Execute();
             await HomeIndex.Execute();
             await CreateFriendshipRequest.Execute();
             await AcceptFriendshipRequest.Execute();
             await FindUsers.Execute();
+            await UploadProfilePicture.Execute();
+            await UserProfile.Execute();
+
 
             Console.WriteLine("API Tests passed succesfully");
         }

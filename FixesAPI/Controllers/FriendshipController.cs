@@ -46,14 +46,12 @@ namespace FixesAPI.Controllers
             if (friendship == true)
             {
                 response.ResponseCode = (int)ResponseCode.Ok;
-                response.Message = new Dictionary<string, string>() { { "Yay", "Friendship Sent!" } };
+                response.Message = new Dictionary<string, object>() { { "Yay", "Friendship Sent!" } };
                 response.Error = false;
-                response.ErrorList = null;
             }
             else
             {
                 response.ResponseCode = (int)ResponseCode.BadRequest;
-                response.Message = null;
                 response.Error = true;
                 response.ErrorList = new Dictionary<string, string>() { { "Error", "Friendship was not sent!" } }; ;
             }
@@ -71,14 +69,12 @@ namespace FixesAPI.Controllers
             if (friendship == true)
             {
                 response.ResponseCode = (int)ResponseCode.Ok;
-                response.Message = new Dictionary<string, string>() { { "Yay", "New friendship!" } };
+                response.Message = new Dictionary<string, object>() { { "Yay", "New friendship!" } };
                 response.Error = false;
-                response.ErrorList = null;
             }
             else
             {
                 response.ResponseCode = (int)ResponseCode.BadRequest;
-                response.Message = null;
                 response.Error = true;
                 response.ErrorList = new Dictionary<string, string>() { { "Error", "Friendship was not saved!" } }; ;
             }

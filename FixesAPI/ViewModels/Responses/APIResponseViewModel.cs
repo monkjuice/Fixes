@@ -7,7 +7,7 @@ namespace FixesAPI
     {
         public int ResponseCode { get; set; }
 
-        public Dictionary<string, string> Message { get; set; }
+        public IDictionary<string, object> Message { get; set; }
 
         public bool Error { get; set; }
 

@@ -1,18 +1,17 @@
 ﻿using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
 using System;
+using System.IO;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Text;
 using System.Threading.Tasks;
+using static System.Diagnostics.Debug;
 
 namespace TestAPI
 {
-    class LoginUser
+    class UploadProfilePicture
     {
         private static readonly HttpClient client = new HttpClient();
-
-
 
         async static public Task Execute()
         {
@@ -22,31 +21,30 @@ namespace TestAPI
                 client.DefaultRequestHeaders.Accept.Add(
                     new MediaTypeWithQualityHeaderValue("application/json"));
                 client.DefaultRequestHeaders.Add("User-Agent", ".NET Foundation Repository Reporter");
+                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", Program.userToken);
 
-                var user = new
-                {
-                    Username = "Starlight",
-                    Password = "wipididu",
-                };
+                var content = new MultipartFormDataContent();
 
-                string body = JsonConvert.SerializeObject(user, Formatting.Indented);
+                string path = "resources/mimann.jpg";
 
-                var stringTask = client.PostAsync(Program.baseURL + "/login", new StringContent(body, Encoding.UTF8, "application/json"));
+                var picture = new FileStream(path, FileMode.Open);
 
-                var msg = await stringTask;
+                content.Add(new StreamContent(picture),
+                    "Image",
+                    path);
 
-                var jsonString = msg.Content.ReadAsStringAsync().Result.Replace("\\", "").Trim('"');
+                var task = await client.PostAsync(Program.baseURL + "/api/user/uploadprofilepicture", content);
+
+                var jsonString = task.Content.ReadAsStringAsync().Result.Replace("\\", "").Trim('"');
 
                 Console.WriteLine(jsonString);
 
                 var response = JsonConvert.DeserializeObject<Program.Response>(jsonString);
 
-                Program.userToken = response.Message["_token"].ToString();
-
             }
             catch (Exception e)
             {
-                throw e;
+                Console.WriteLine(e);
             }
         }
     }
