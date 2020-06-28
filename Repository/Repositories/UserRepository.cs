@@ -17,7 +17,7 @@ namespace Repository.Repositories
         {
             return await Context.User.Where(x => x.UserName.ToLower().Contains(name)).Select(x => new UserViewModel
             {
-                Id = x.Id,
+                UserId = x.Id,
                 UserName = x.UserName,
             }).ToListAsync();
         }
@@ -34,8 +34,7 @@ namespace Repository.Repositories
             }
             catch(Exception e)
             {
-                // we need the logger
-                return null;
+                throw e;
             }
        }
 
@@ -48,7 +47,7 @@ namespace Repository.Repositories
             catch (Exception e)
             {
                 // dev logger
-                return null;
+                throw e;
             }
         }
 
@@ -61,7 +60,7 @@ namespace Repository.Repositories
             catch(Exception e)
             {
                 // dev logger
-                return null;
+                throw e;
             }
         }
 
@@ -73,9 +72,12 @@ namespace Repository.Repositories
 
                 if(user != null)
                 {
-                    UserViewModel uvm = new UserViewModel();
-                    uvm.UserName = user.UserName;
-                    uvm.ProfilePicturePath = user.ProfilePicturePath;
+                    UserViewModel uvm = new UserViewModel
+                    {
+                        UserId = user.Id,
+                        UserName = user.UserName,
+                        ProfilePicturePath = user.ProfilePicturePath
+                    };
                     return uvm;
                 }
 

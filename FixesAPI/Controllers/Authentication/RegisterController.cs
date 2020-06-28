@@ -49,7 +49,7 @@ namespace FixesAPI.Controllers
                 {
                     response.ResponseCode = (int)ResponseCode.ServerError;
                     response.Error = true;
-                    response.ErrorList = new Dictionary<string, string>() { { "msg", e.InnerException.ToString() } };
+                    response.ErrorList = new Dictionary<string, string>() { { "msg", "Error creating user" } };
                 }
             }
             else

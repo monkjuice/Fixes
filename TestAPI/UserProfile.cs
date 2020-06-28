@@ -30,6 +30,8 @@ namespace TestAPI
 
                 var response = JsonConvert.DeserializeObject<Program.Response>(jsonString);
 
+                Console.WriteLine(response.Message["Profile"].ToString());
+
                 if(response.Error == false)
                 {
                     var profile = JsonConvert.DeserializeObject<Models.UserProfile>(response.Message["Profile"].ToString());
