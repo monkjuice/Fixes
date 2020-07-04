@@ -1,4 +1,5 @@
 ﻿using Model;
+using Repository.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -9,7 +10,7 @@ namespace Service.Interfaces
     {
         public User Register(User mappedRegisterForm);
 
-        public User Login(User mappedLoginForm);
+        public UserViewModel Login(User mappedLoginForm);
 
         public bool UserNameExists(string UserName);
 

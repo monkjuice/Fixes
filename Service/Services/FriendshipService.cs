@@ -1,6 +1,7 @@
 ﻿using Model;
 using Repository.Interfaces;
 using Repository.Repositories;
+using Repository.ViewModels;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -15,6 +16,11 @@ namespace FixesBusiness
         {
             userRepository = new UserRepository();
             friendshipRepository = new FriendshipRepository();
+        }
+
+        async public Task<List<UserViewModel>> GetFriendsList(int userId)
+        {
+            return await friendshipRepository.GetFriendsList(userId);
         }
 
         async public Task<FriendshipRequest> GetFriendshipRequest(int requestId)

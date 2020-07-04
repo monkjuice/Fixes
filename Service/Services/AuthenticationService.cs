@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using FixesBusiness.Utils;
 using System.Text;
+using Repository.ViewModels;
 
 namespace Service
 {
@@ -34,12 +35,20 @@ namespace Service
             return userRepository.Register(user);
         }
 
-        public User Login(User loginForm)
+        public UserViewModel Login(User loginForm)
         {
-            return userRepository.GetUserByUserName(loginForm.UserName);
+
+            var user = userRepository.GetUserByUserName(loginForm.UserName);
+
+            return new UserViewModel()
+            {
+                UserId = user.Id,
+                ProfilePicturePath = user.ProfilePicturePath,
+                Username = user.UserName,
+            };
         }
 
-        public bool CheckCredentials(User loginForm)
+    public bool CheckCredentials(User loginForm)
         {
 
             User user = userRepository.GetUserByUserName(loginForm.UserName);

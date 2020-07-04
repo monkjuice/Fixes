@@ -37,6 +37,8 @@ namespace TestAPI
 
                 var jsonString = msg.Content.ReadAsStringAsync().Result.Replace("\\", "").Trim('"');
 
+                Console.WriteLine(msg.StatusCode);
+
                 Console.WriteLine(jsonString);
 
                 var response = JsonConvert.DeserializeObject<Program.Response>(jsonString);

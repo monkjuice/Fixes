@@ -81,6 +81,20 @@ namespace FixesAPI.Controllers
 
             return JsonConvert.SerializeObject(response);
         }
+
+        [HttpGet("friendslist")]
+        async public Task<string> GetFriendsList(int userId)
+        {
+            var response = new APIResponseViewModel();
+
+            var friendsList = await friendshipService.GetFriendsList(userId);
+
+            response.ResponseCode = (int)ResponseCode.Ok;
+            response.Message = new Dictionary<string, object>() { { "Friends", friendsList } };
+            response.Error = false;
+
+            return JsonConvert.SerializeObject(response);
+        }
     }
 }
 

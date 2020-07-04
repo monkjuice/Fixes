@@ -34,6 +34,7 @@ namespace TestAPI
             await FindUsers.Execute();
             await UploadProfilePicture.Execute();
             await UserProfile.Execute();
+            await GetFriendsList.Execute();
 
 
             Console.WriteLine("API Tests passed succesfully");

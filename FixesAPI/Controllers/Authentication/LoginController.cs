@@ -12,6 +12,7 @@ using System.IdentityModel.Tokens.Jwt;
 using Microsoft.Extensions.Configuration;
 using System.Security.Claims;
 using System.Collections.Generic;
+using Repository.ViewModels;
 
 namespace FixesAPI.Controllers
 {
@@ -48,7 +49,7 @@ namespace FixesAPI.Controllers
 
                     response.ResponseCode = (int)ResponseCode.Ok;
 
-                    response.Message = new Dictionary<string, object>() { { "_token", tokenString } };
+                    response.Message = new Dictionary<string, object>() { { "_token", tokenString }, { "User", user } };
 
                     response.Error = false;
                 }
@@ -68,15 +69,15 @@ namespace FixesAPI.Controllers
             return JsonConvert.SerializeObject(response);
         }
 
-        private string GenerateJWT(User user)
+        private string GenerateJWT(UserViewModel user)
         {
             var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_config["Jwt:Key"]));
             var credentials = new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha256);
 
             var permClaims = new List<Claim>();
             permClaims.Add(new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()));
-            permClaims.Add(new Claim("userid", user.Id.ToString()));
-            permClaims.Add(new Claim("username", user.UserName));
+            permClaims.Add(new Claim("userid", user.UserId.ToString()));
+            permClaims.Add(new Claim("username", user.Username));
 
             var token = new JwtSecurityToken(
                 _config["Jwt:Issuer"],

@@ -1,5 +1,6 @@
 ﻿using Newtonsoft.Json;
 using System;
+using System.Collections.Generic;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Text;
@@ -7,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace TestAPI
 {
-    class UserProfile
+    class GetFriendsList
     {
         private static readonly HttpClient client = new HttpClient();
 
@@ -22,7 +23,7 @@ namespace TestAPI
 
                 client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", Program.userToken);
 
-                var stringTask = client.GetAsync(Program.baseURL + "/api/user/profile?userId=1");
+                var stringTask = client.GetAsync(Program.baseURL + "/api/friendship/friendslist?userId=1");
 
                 var msg = await stringTask;
 
@@ -30,11 +31,10 @@ namespace TestAPI
 
                 var response = JsonConvert.DeserializeObject<Program.Response>(jsonString);
 
-                Console.WriteLine(response.Message["Profile"].ToString());
-
                 if(response.Error == false)
                 {
-                    var profile = JsonConvert.DeserializeObject<Models.UserProfile>(response.Message["Profile"].ToString());
+                    var friends = JsonConvert.DeserializeObject<List<Models.UserProfile>>(response.Message["Friends"].ToString());
+                    Console.WriteLine(friends);
                 }
 
             }

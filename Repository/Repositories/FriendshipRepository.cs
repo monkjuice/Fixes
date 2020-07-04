@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Model;
 using Repository.Interfaces;
+using Repository.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,6 +12,25 @@ namespace Repository.Repositories
 {
     public class FriendshipRepository : FixesRepository, IFriendshipRepository
     {
+
+        async public Task<List<UserViewModel>> GetFriendsList(int userId)
+        {
+            try
+            {
+                var request = await Context.Friendship.Where(x => x.UserAId == userId || x.UserBId == userId).Select(x => new UserViewModel()
+                {
+                    UserId = x.UserAId == userId ? x.UserB.Id : x.UserA.Id,
+                    Username = x.UserAId == userId ? x.UserB.UserName : x.UserA.UserName,
+                    ProfilePicturePath = x.UserAId == userId ? x.UserB.ProfilePicturePath : x.UserA.ProfilePicturePath
+                }).ToListAsync();
+
+                return request;
+            }
+            catch (Exception e)
+            {
+                return null;
+            }
+        }
 
         async public Task<FriendshipRequest> GetFriendshipRequest(int requestId)
         {
@@ -117,12 +137,6 @@ namespace Repository.Repositories
         {
             return "Ok";
         }
-
-        public List<User> GetFriendList(User user)
-        {
-            return null;
-        }
-
 
         async public Task<bool> CheckExistingRequest(int userAId, int userBId)
         {

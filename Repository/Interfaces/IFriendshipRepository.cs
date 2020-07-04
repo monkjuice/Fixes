@@ -1,4 +1,5 @@
 ﻿using Model;
+using Repository.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -15,7 +16,7 @@ namespace Repository.Interfaces
         public Task<Friendship> GetFriendship(int friendshipId);
         public Task<bool> SaveFriendship(Friendship friendship);
         public string DeleteFriendship(Friendship friendship);
-        public List<User> GetFriendList(User user);
+        public Task<List<UserViewModel>> GetFriendsList(int userId);
         public Task<bool> CheckExistingRequest(int userAId, int userBId);
         public Task<bool> CheckExistingFriendship(int userAId, int userBId);
     }

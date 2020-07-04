@@ -27,11 +27,9 @@ namespace FixesAPI.Controllers
         }
 
         [HttpGet("profile")]
-        async public Task<string> GetUserProfile()
+        async public Task<string> GetUserProfile(int userId)
         {
             var response = new GetUserProfileResponse();
-
-            int userId = int.Parse(HttpContext.User.Claims.FirstOrDefault(x => x.Type == "userid").Value);
 
             var profile = await userService.GetUserProfile(userId);
 

@@ -18,7 +18,7 @@ namespace Repository.Repositories
             return await Context.User.Where(x => x.UserName.ToLower().Contains(name)).Select(x => new UserViewModel
             {
                 UserId = x.Id,
-                UserName = x.UserName,
+                Username = x.UserName,
             }).ToListAsync();
         }
 
@@ -75,7 +75,7 @@ namespace Repository.Repositories
                     UserViewModel uvm = new UserViewModel
                     {
                         UserId = user.Id,
-                        UserName = user.UserName,
+                        Username = user.UserName,
                         ProfilePicturePath = user.ProfilePicturePath
                     };
                     return uvm;
