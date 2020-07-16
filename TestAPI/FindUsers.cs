@@ -30,7 +30,7 @@ namespace TestAPI
 
                 string body = JsonConvert.SerializeObject(oBody, Formatting.Indented);
 
-                var stringTask = client.PostAsync(Program.baseURL + "/api/user/findusers", new StringContent(body, Encoding.UTF8, "application/json"));
+                var stringTask = client.GetAsync(Program.baseURL + "/api/user/findusers/?username=s");
 
                 var msg = await stringTask;
 

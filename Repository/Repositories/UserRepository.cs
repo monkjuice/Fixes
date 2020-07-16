@@ -19,6 +19,7 @@ namespace Repository.Repositories
             {
                 UserId = x.Id,
                 Username = x.UserName,
+                ProfilePicturePath = x.ProfilePicturePath
             }).ToListAsync();
         }
 

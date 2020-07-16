@@ -12,6 +12,6 @@ namespace FixesBusiness
     {
         public Task<UserViewModel> GetUserProfile(int userId);
         public Task<List<UserViewModel>> FindUsersByName(string name);
-        public Task<bool> UploadProfilePicture(Stream file, int userId);
+        public Task<string> UploadProfilePicture(Stream file, int userId);
     }
 }

@@ -26,6 +26,8 @@ namespace FixesAPI
             services.ConfigureCors();
             services.ConfigureIISIntegration();
 
+
+
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
             .AddJwtBearer(options =>
             {

@@ -66,13 +66,13 @@ namespace FixesAPI.Controllers
 
                 int userId = int.Parse(HttpContext.User.Claims.FirstOrDefault(x => x.Type == "userid").Value);
 
-                bool success = await userService.UploadProfilePicture(file, userId);
+                string path = await userService.UploadProfilePicture(file, userId);
 
-                if (success)
+                if (path != null)
                 {
                     response.ResponseCode = (int)ResponseCode.Ok;
                     response.Error = false;
-                    response.Message = new Dictionary<string, object>() { { "Woo hoo",  "Profile picture updated!" } };
+                    response.Message = new Dictionary<string, object>() { { "path",  path } };
                 }
                 else
                 {
@@ -92,12 +92,12 @@ namespace FixesAPI.Controllers
             return JsonConvert.SerializeObject(response);
         }
 
-        [HttpPost("findusers")]
-        async public Task<string> FindUsers(StringQueryViewModel request)
+        [HttpGet("findusers")]
+        async public Task<string> FindUsers(string username)
         {
             var response = new APIResponseViewModel();
 
-            var users = await userService.FindUsersByName(request.SearchParam);
+            var users = await userService.FindUsersByName(username);
 
             response.Message = new Dictionary<string, object>() { { "Users", users } };
             response.ResponseCode = (int)ResponseCode.Ok;

@@ -35,7 +35,7 @@ namespace FixesBusiness
             return await userRepository.GetUserProfile(userId);
         }
 
-        async public Task<bool> UploadProfilePicture(Stream file, int userId)
+        async public Task<string> UploadProfilePicture(Stream file, int userId)
         {
             try
             {
@@ -50,20 +50,20 @@ namespace FixesBusiness
                     var storedFile = await FileStorage.UploadBlob(file, "profilepictures", fileName);
 
                     if (!storedFile)
-                        return false;
+                        return null;
 
                     var storedReference = await userRepository.StoreProfilePicturePath(path, user);
 
                     if (storedReference)
-                        return true;
+                        return path;
                 }
 
-                return false;
+                return null;
 
             }
             catch(Exception e)
             {
-                return false;
+                return null;
             }
         }
     }

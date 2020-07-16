@@ -35,7 +35,7 @@ namespace TestAPI
             await UploadProfilePicture.Execute();
             await UserProfile.Execute();
             await GetFriendsList.Execute();
-
+            await SignalR.Execute();
 
             Console.WriteLine("API Tests passed succesfully");
         }

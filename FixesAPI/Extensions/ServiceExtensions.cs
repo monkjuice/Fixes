@@ -18,6 +18,14 @@ namespace FixesAPI.Extensions
                     .WithMethods("GET")
                     .AllowAnyHeader());
             });
+
+            services.AddCors(options => options.AddPolicy("CorsPolicy",
+            builder =>
+            {
+                builder.AllowAnyMethod().AllowAnyHeader()
+                        .WithOrigins("http://localhost:8000")
+                        .AllowCredentials();
+            }));
         }
 
         public static void ConfigureIISIntegration(this IServiceCollection services)
