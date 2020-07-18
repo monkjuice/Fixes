@@ -21,7 +21,7 @@ namespace FixesAPI.RealTime
             Clients.Group(who).SendAsync("RecieveMessage", message, from);
         }
 
-        public void SendChatMessage(string who, byte[] message)
+        public void SendChatMessage(string who, string message)
         {
             var user = Context.GetHttpContext().User;
             string from = user.Claims.FirstOrDefault(x => x.Type == "userid").Value;

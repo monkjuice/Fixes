@@ -9,7 +9,7 @@ namespace FixesAPI.RealTime
     {
         public void QueueChatMessage(string who, string message);
 
-        public void SendChatMessage(string who, byte[] message);
+        public void SendChatMessage(string who, string message);
 
         public void MessageRecieved(string messageId);
     }
